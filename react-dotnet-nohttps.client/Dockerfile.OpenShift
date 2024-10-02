@@ -1,0 +1,28 @@
+FROM registry.access.redhat.com/ubi8/nodejs-20-minimal
+
+USER 0
+
+RUN microdnf install curl
+
+WORKDIR /app
+
+COPY package.json .
+
+ARG BUILD_CONFIGURATION=Release
+
+RUN npm install
+
+RUN npm i -g serve
+
+COPY . .
+
+RUN npm run build
+
+# for OCP deployment to deal with anyuid privileges
+USER root
+RUN chown -R 1001:0 /app
+USER 1001
+
+EXPOSE 3000
+
+CMD [ "serve", "-s", "dist" ]
