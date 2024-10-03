@@ -1,0 +1,29 @@
+[2/4] STEP 8/11: RUN pwd
+/src
+--> d22614463800
+[2/4] STEP 9/11: RUN ls .
+CHANGELOG.md
+Controllers
+Program.cs
+Properties
+README.OpenShift.server.md
+WeatherForecast.cs
+appsettings.Development.json
+appsettings.json
+noclient-react-dotnet-nohttps.Server.csproj
+react-dotnet-nohttps.Server
+react-dotnet-nohttps.Server.csproj
+react-dotnet-nohttps.Server.http
+--> ac8985164d1f
+[2/4] STEP 10/11: WORKDIR /src/react-dotnet-nohttps.Server
+--> 4ad9d24ab146
+[2/4] STEP 11/11: RUN dotnet build ./noclient-react-dotnet-nohttps.Server.csproj -c $BUILD_CONFIGURATION -o /app/build
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+CSC : error CS5001: Program does not contain a static 'Main' method suitable for an entry point [/src/react-dotnet-nohttps.Server/noclient-react-dotnet-nohttps.Server.csproj]
+
+Build FAILED.
+
+CSC : error CS5001: Program does not contain a static 'Main' method suitable for an entry point [/src/react-dotnet-nohttps.Server/noclient-react-dotnet-nohttps.Server.csproj]
+    0 Warning(s)
+    1 Error(s)
