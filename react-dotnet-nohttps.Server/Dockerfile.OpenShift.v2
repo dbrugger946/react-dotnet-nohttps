@@ -1,21 +1,18 @@
-#FROM registry.access.redhat.com/ubi8/dotnet-80-runtime AS base
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+FROM registry.access.redhat.com/ubi8/dotnet-80-runtime AS base
 WORKDIR /app
 
-#FROM registry.access.redhat.com/ubi8/dotnet-80 AS build
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM registry.access.redhat.com/ubi8/dotnet-80 AS build
 USER 0
 
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
 COPY noclient-react-dotnet-nohttps.Server.csproj react-dotnet-nohttps.Server/
-# COPY react-dotnet-nohttps.Server/noclient-react-dotnet-nohttps.Server.csproj react-dotnet-nohttps.Server
 
 RUN dotnet restore react-dotnet-nohttps.Server/noclient-react-dotnet-nohttps.Server.csproj
-COPY . .
-RUN pwd
-RUN ls .
+
+COPY . react-dotnet-nohttps.Server/
+
 WORKDIR /src/react-dotnet-nohttps.Server
 RUN dotnet build ./noclient-react-dotnet-nohttps.Server.csproj -c $BUILD_CONFIGURATION -o /app/build
 

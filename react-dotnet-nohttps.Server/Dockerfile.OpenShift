@@ -11,6 +11,10 @@ COPY ["react-dotnet-nohttps.Server/noclient-react-dotnet-nohttps.Server.csproj",
 
 RUN dotnet restore "./react-dotnet-nohttps.Server/noclient-react-dotnet-nohttps.Server.csproj"
 COPY . .
+
+RUN pwd
+RUN ls
+
 WORKDIR "/src/react-dotnet-nohttps.Server"
 RUN dotnet build "./noclient-react-dotnet-nohttps.Server.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
