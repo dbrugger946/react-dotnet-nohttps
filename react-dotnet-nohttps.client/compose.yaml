@@ -2,7 +2,7 @@ services:
     web:
         image: quay.io/dbrugger946/vite-weather-client:latest
         ports:
-            - "3000:3000"
+            - "3000:8080"
         depends_on:
             - weather-server
     weather-server:
