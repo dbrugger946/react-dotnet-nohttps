@@ -22,14 +22,7 @@ RUN npm run build
 # Serve the app using NGINX
 FROM registry.redhat.io/rhel9/nginx-124
 
-# for OpenShift compliant non root user permissions
-# RUN chmod -R g+rwx /var/cache/nginx /var/run /var/log/nginx
-# RUN chown -R nginx:0 /usr/share/nginx/html && \
-#    chmod -R g+rwX /usr/share/nginx/html
-
 COPY --from=build /app/dist /opt/app-root/src
-# COPY nginx/nginx.conf /etc/nginx/default.conf
-# COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 COPY nginx/nginx.conf /opt/app-root/etc/nginx.d
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
