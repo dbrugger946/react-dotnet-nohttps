@@ -11,10 +11,10 @@ When deploying/running containers on OpenShift ensure you properly configure the
 
 #### High level approach
 
-- Start with the Server project  Follow the README instructions
+- Start with the Server project  Follow the **README.OpenShift.server.md** instructions
 - Note: Fix/adjust the Server project file based upon the "minimal*" example project file provided to remove client dependencies.
 - Note: Adjust and run the .Server Dockerfile you choose to use. Dockerfile.OpenShift.v2 recommended (weather-server)
-- Switch to the Client project and follow the instructions in its README
+- Switch to the Client project and follow the instructions in its **README.OpenShift.client.md**
 - Note: Adjust the vite.config.ts file in the .client project  (vite-weather-client), if you want to test locally first
 - Note: Adjust and run the .client Dockerfile that supports the nginx approach
 - Deploy the .Server  weather-server container based upon the Server README
