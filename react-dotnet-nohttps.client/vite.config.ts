@@ -17,7 +17,7 @@ export default defineConfig({
                 changeOrigin: true,
                 secure: false,
                 ws: true,
-                rewrite: (path) => path.replace(/^\/api/, ''),
+                //rewrite: (path) => path.replace(/^\/api/, ''),
 
                 configure: (proxy, options) => {
                     console.log("options local address: " + options.localAddress);

@@ -1,8 +1,10 @@
+
+# be careful with port assignments, check relevant dockerfiles.* to ensure you are are mapping correctly
 services:
     web:
         image: quay.io/dbrugger946/vite-weather-client:latest
         ports:
-            - "3000:8080"
+            - "3000:3000"
         depends_on:
             - weather-server
     weather-server:
