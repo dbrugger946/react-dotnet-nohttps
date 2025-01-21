@@ -18,9 +18,9 @@ oc delete cm nginx-conf-cm
 
 oc set volume deployment/weather-client-ts --add --name nginx-conf-vol --mount-path /opt/app-root/etc/nginx.default.d/nginx-proxy.conf  --configmap-name=nginx-conf-cm --sub-path=nginx-proxy.conf  
 
-oc set volume deployment/weather-client-ts --add --overwrite --name nginx-conf-vol --mount-path /opt/app-root/etc/nginx.default.d/nginx-proxy.conf  --configmap-name=nginx-conf-cm --sub-path=nginx-proxy.conf  
+oc set volume deployment/weather-client-ts --add ***--overwrite*** --name nginx-conf-vol --mount-path /opt/app-root/etc/nginx.default.d/nginx-proxy.conf  --configmap-name=nginx-conf-cm --sub-path=nginx-proxy.conf  
 
-oc set volume deployment/weather-client-ts --remove --name nginx-conf-vol  
+oc set volume deployment/weather-client-ts ***--remove*** --name nginx-conf-vol  
 
 
 ### Various local run and build approach including docker/podman/compose 
