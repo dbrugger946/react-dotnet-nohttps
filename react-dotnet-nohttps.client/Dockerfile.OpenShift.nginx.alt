@@ -1,0 +1,36 @@
+# Build the client app container
+# This version of the nginx Dockerfile directly copies the reverse proxy conf file into the build directly
+# On OpenShift you would always use best practices and use a configmap and mount as a volume 
+
+FROM registry.redhat.io/rhel9/nodejs-22-minimal:9.5 AS build 
+# FROM  ubi9/nodejs-22-minimal AS build
+
+USER 0
+
+# RUN microdnf install curl
+
+WORKDIR /app
+
+COPY package.json .
+COPY package-lock.json .
+
+# ARG BUILD_CONFIGURATION=Release
+
+# RUN npm install --verbose
+RUN npm ci
+
+COPY . .
+
+RUN npm run build
+
+
+# Serve the app using NGINX
+FROM registry.redhat.io/rhel9/nginx-124
+
+COPY --from=build /app/dist /opt/app-root/src
+COPY --from=build /app/openshift/nginx-proxy.conf  /opt/app-root/etc/nginx.default.d/
+
+EXPOSE 8080
+CMD ["nginx", "-g", "daemon off;"]
+
+

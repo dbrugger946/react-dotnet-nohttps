@@ -1,12 +1,16 @@
-
 # be careful with port assignments, check relevant dockerfiles.* to ensure you are are mapping correctly
+# current version of this file will work with Dockerfile.OpenShift.nginx
+# if you use Dockerfile.OpenShift.nginx.alt then in that case you don't need the volume mount bc you copied nginx-proxy.conf in the Dockerfile
 services:
     web:
         image: quay.io/dbrugger946/vite-weather-client:latest
         ports:
-            - "3000:3000"
+            - "8090:8080"
+            # - "3000:3000"
         depends_on:
             - weather-server
+        volumes:
+            - ./openshift/:/opt/app-root/etc/nginx.default.d/:ro
     weather-server:
         image: quay.io/dbrugger946/weather-server:latest
         ports:

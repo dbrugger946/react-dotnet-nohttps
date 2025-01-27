@@ -4,7 +4,7 @@
 #### This fully removes any client artifacts and uses best practices build approach
 NOTE:  Notice that you need to create a separate "new minimal" .Server project file and remove client app dependency  
 cd react-dotnet-nohttps.Server  
-podman build  -f ./Dockerfile.OpenShift.v2 -t quay.io/dbrugger946/weather-server:latest  . 
+podman build  -f ./Dockerfile.OpenShift.v2 -t quay.io/dbrugger946/weather-server:latest  .  
 OR  
 docker build -f ./Dockerfile.OpenShift.v2 -t quay.io/dbrugger946/weather-server:latest .  
 NOTE: **adding  --platform linux/amd64,linux/arm64** can create issues depending upon what platform you are building on.

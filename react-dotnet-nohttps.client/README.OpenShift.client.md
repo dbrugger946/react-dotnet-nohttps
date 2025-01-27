@@ -31,6 +31,11 @@ from the *react-dotnet-nohttps.client* directory
 docker build -f ./Dockerfile.OpenShift -t quay.io/dbrugger946/vite-weather-client:latest .  
 OR  
 docker build -f ./Dockerfile.OpenShift.dev -t quay.io/dbrugger946/vite-weather-client:latest .  
+
+***OR the following copies the nginx.conf file into the nginx build version of the image 
+For OpenShift deployments you would want to use best practices and use the configmap / volume approach from above also***   
+podman build  -f ./Dockerfile.OpenShift.nginx.alt -t quay.io/dbrugger946/vite-weather-client:latest  .  
+
 docker run --name weather-client -p 3000:3000 quay.io/dbrugger946/vite-weather-client:latest  
 docker push quay.io/dbrugger946/vite-weather-client:latest  
 
