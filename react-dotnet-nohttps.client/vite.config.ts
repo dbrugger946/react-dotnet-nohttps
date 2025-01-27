@@ -1,10 +1,9 @@
 import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react";
 
-
-//const urlTarget = 'http://localhost:8888';
+const urlTarget = 'http://localhost:8888';
 //const urlTarget = 'http://reactdotnettsclient-weather-server-1:8080';
-const urlTarget = 'http://weather-server:8080';
+//const urlTarget = 'http://weather-server:8080';
 
 // https://vitejs.dev/config/
 export default defineConfig({

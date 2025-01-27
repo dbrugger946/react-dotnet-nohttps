@@ -13,7 +13,7 @@ Example local invocation after running container
 curl http://localhost:8888/api/weatherforecast
 
 ### Openshift example cli's for deployment
-oc new-app quay.io/dbrugger946/weather-server:latest --name=weather-server  
+oc new-app quay.io/dbrugger946/weather-server:latest --name=weather-server   --as-deployment-config=false
 oc expose service/weather-server  
 oc delete all -l app=weather-server  
 

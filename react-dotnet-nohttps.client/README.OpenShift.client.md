@@ -1,29 +1,37 @@
 ## OpenShift Client app
 **NOTE: These are just example commands you will need to adjust them to fit your organization's registries, and may also need to adjust ubi(s) and commands in Dockerfiles.**
 
-### nginx based build
+### 1: nginx based build
 podman build  -f ./Dockerfile.OpenShift.nginx -t quay.io/dbrugger946/vite-weather-client:latest  .  
 podman push quay.io/dbrugger946/vite-weather-client:latest  
 
-### example OpenShift cli app deployment routines
-oc new-app quay.io/dbrugger946/vite-weather-client:latest --name=weather-client-ts  
-oc expose service/weather-client-ts  
-oc delete all -l app=weather-client-ts  
+### 2: example OpenShift cli app deployment routines
+(deploy the client app) oc new-app quay.io/dbrugger946/vite-weather-client:latest --name=weather-client-ts   --as-deployment-config=false  
+(http route) oc expose service/weather-client-ts
+OR  
+(https route) oc create route edge --service=weather-client-ts  
+
+(if need be:) oc delete all -l app=weather-client-ts  
 
 
-### create/manage configmap and volume mounts   
+### 3: create/manage configmap and volume mounts   
 **Needed for setting up reverse proxy in nginx**  
+(i. create a config map from the file)  
 oc create cm  nginx-conf-cm  --from-file=nginx-proxy.conf=openshift/nginx-proxy.conf  
-oc delete cm nginx-conf-cm  
 
-oc set volume deployment/weather-client-ts --add --name nginx-conf-vol --mount-path /opt/app-root/etc/nginx.default.d/nginx-proxy.conf  --configmap-name=nginx-conf-cm --sub-path=nginx-proxy.conf  
+(if need be:) oc delete cm nginx-conf-cm  
 
+(ii. link the configmap to the deployment)  
+oc set volume deployment/weather-client-ts --add --name=nginx-conf-vol --mount-path=/opt/app-root/etc/nginx.default.d/nginx-proxy.conf  --configmap-name=nginx-conf-cm --sub-path=nginx-proxy.conf  
+(***^confirm the mount-path is set correctly for your particular nginx image -- ALSO. cli calls from windows bash/cmd/PS sometimes mangle the path)***  
+
+(if you need to modify it)  
 oc set volume deployment/weather-client-ts --add ***--overwrite*** --name nginx-conf-vol --mount-path /opt/app-root/etc/nginx.default.d/nginx-proxy.conf  --configmap-name=nginx-conf-cm --sub-path=nginx-proxy.conf  
 
-oc set volume deployment/weather-client-ts ***--remove*** --name nginx-conf-vol  
+(if need be:) oc set volume deployment/weather-client-ts ***--remove*** --name nginx-conf-vol  
 
 
-### Various local run and build approach including docker/podman/compose 
+### Other Scenarios: Various local run and build approach including docker/podman/compose 
 npm run dev  
   
 **You can use these approaches to create "local" developer testing scenarios.  You will need to make adjustments to some configuration files to meet your environment**  
