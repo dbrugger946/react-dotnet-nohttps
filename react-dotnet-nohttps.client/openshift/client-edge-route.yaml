@@ -1,0 +1,18 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: weather-client-ts
+  labels:
+    app: weather-client-ts
+    app.kubernetes.io/component: weather-client-ts
+    app.kubernetes.io/instance: weather-client-ts
+spec:
+  to:
+    kind: Service
+    name: weather-client-ts
+    weight: 100
+  port:
+    targetPort: 8080-tcp
+  tls:
+    termination: edge
+  wildcardPolicy: None

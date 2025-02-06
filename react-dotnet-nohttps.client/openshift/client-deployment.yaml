@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+  labels:
+    app: weather-client-ts
+    app.kubernetes.io/component: weather-client-ts
+    app.kubernetes.io/instance: weather-client-ts
+  name: weather-client-ts
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: weather-client-ts
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        deployment: weather-client-ts
+    spec:
+      containers:
+        - name: weather-client-ts 
+          image: quay.io/dbrugger946/vite-weather-client:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+            - containerPort: 8443
+              protocol: TCP
+          volumeMounts:
+            - name: nginx-conf-vol
+              mountPath: /opt/app-root/etc/nginx.default.d/nginx-proxy.conf
+              subPath: nginx-proxy.conf
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: nginx-conf-cm
+        name: nginx-conf-vol
