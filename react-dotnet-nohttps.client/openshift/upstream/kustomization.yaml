@@ -4,9 +4,13 @@ configMapGenerator:
 - name: nginx-conf-cm
   behavior: create
   files:
-  - ./nginx-proxy.conf
+  - ./conf/nginx.conf
+- name: nginx-default-cm
+  behavior: create
+  files:
+  - ./conf/default.conf
   
 resources:
-- ./client-deployment.yaml
+- ./client-deployment-upstream.yaml
 - ./client-service.yaml
 - ./client-edge-route.yaml

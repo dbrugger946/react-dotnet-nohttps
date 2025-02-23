@@ -13,18 +13,18 @@
 
 **2: Override both the main /etc/nginx/nginx.conf file and the /etc/nginx/conf.d/default.conf files**  
 *Basically you need to create 2 configmaps and setup two volume mounts*  
-- use the *openshift/conf/nginx.conf* file probably as is  
-- use the *openshift/conf/default.conf*  **you should only have to adjust the ***proxy_pass*** setting**  
+- use the *openshift/upstream/conf/nginx.conf* file probably as is  
+- use the *openshift/upstream/conf/default.conf*  **you should only have to adjust the ***proxy_pass*** setting**  
 
 
 **3: Create the ConfigMap(s)**  
-oc create cm nginx-conf-cm --from-file=nginx.conf=openshift/conf/nginx.conf  
-oc create cm nginx-default-cm --from-file=default.conf=openshift/conf/default.conf
+oc create cm nginx-conf-cm --from-file=nginx.conf=openshift/upstream/conf/nginx.conf  
+oc create cm nginx-default-cm --from-file=default.conf=openshift/upstream/conf/default.conf
 
 **4: Deploy the client app -- here using yamls that you will may need to adjust**  
-oc create -f ./openshift/client-deployment-upstream.yaml  
-oc create -f ./openshift/client-service.yaml  
-oc create -f ./openshift/client-edge-route.yaml  
+oc create -f ./openshift/upstream/client-deployment-upstream.yaml  
+oc create -f ./openshift/upstream/client-service.yaml  
+oc create -f ./openshift/upstream/client-edge-route.yaml  
 
 
 
